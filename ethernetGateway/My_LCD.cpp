@@ -54,3 +54,13 @@ void switchBacklight() {
   lcd.setBacklight(LCDCurrentBacklightState);
 }
 
+void setBacklight(bool state){
+  if(state){
+    lcd.setBacklight(HIGH);
+    LCDCurrentBacklightState=HIGH;
+  }else{
+    lcd.setBacklight(LOW);
+    LCDCurrentBacklightState=LOW;
+  }
+}
+

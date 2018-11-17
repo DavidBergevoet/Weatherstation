@@ -15,5 +15,6 @@ void printLCD(const String& content);
 void printLCD(const uint8_t content);
 void clearLCD();
 void switchBacklight();
+void setBacklight(bool state);
 
 #endif

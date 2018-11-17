@@ -3,6 +3,7 @@
 #include "WeatherStation.h"
 #include <Debug.h>
 
+MyMessage connect_msg(MY_MESSAGE_STANDARD_VALUES);
 MyMessage msg(MY_MESSAGE_STANDARD_VALUES);
 
 void setup() {
@@ -10,17 +11,20 @@ void setup() {
   readTemp();
   delay(INIT_DELAY);//This delay is for setup for MySensors
 
-  msg.setSensor(CONNECT_CHAR);
+  connect_msg.setSensor(CONNECT_CHAR);
   unsigned short nodeId = MY_NODE_ID;
   debugln(nodeId);
-  send(msg.set(MY_NODE_ID));
-  debugln(msg.getString());
+  send(connect_msg.set(MY_NODE_ID));
+  debugln(connect_msg.getString());
   debugln(F("-----------------"));
 }
 
 void loop()
 {
   readTempWithDelay();
+  if(millis()%86400000==0){
+    send(connect_msg);
+  }
 }
 
 void receive(const MyMessage &message) {

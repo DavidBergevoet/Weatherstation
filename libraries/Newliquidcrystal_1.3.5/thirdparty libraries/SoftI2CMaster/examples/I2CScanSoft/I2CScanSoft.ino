@@ -20,7 +20,6 @@
 */
 
 #include <SoftI2CMaster.h>
-#include <avr/io.h>
 
 //------------------------------------------------------------------------------
 void CPUSlowDown(int fac) {

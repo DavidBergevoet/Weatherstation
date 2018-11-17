@@ -49,7 +49,7 @@ enum MESSAGE_TYPES {TEMP_MESSAGE = 'T', CONNECT_MESSAGE = 'A',BROADCAST_MESSAGE 
 //LCD Defines
 #define LCD_WIDTH 16
 #define LCD_HEIGHT 2
-#define RESET_MESSAGE "PLEASE RESET"
+#define RESET_MESSAGE "PLEASE PRESS BUTTON"
 
 
 #define I2C_ADDR    0x27 
@@ -67,9 +67,9 @@ enum MESSAGE_TYPES {TEMP_MESSAGE = 'T', CONNECT_MESSAGE = 'A',BROADCAST_MESSAGE 
 
 //CLIENTPRINT Defines
 #define MAC_ADDRESS 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED
-#define USERNAME ...
-#define PASSWORD ...
-#define SERVER ...
+#define USERNAME "Bergevoet"
+#define PASSWORD "Benji#123"
+#define SERVER "dbergevoet.nl"
 #define PORT 80
 #define WEATHERSTATION_TARGET "/api/weerstation"
 #define TIME_TARGET "/api/tijd"

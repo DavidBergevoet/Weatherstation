@@ -42,7 +42,9 @@ float readTempWithDelay() {
   if (millis() - _tempTimer >= _TEMP_DELAY) {
     _tempTimer = millis();
     debugln(F("Read the temperature"));
-    return readTemp();
+    float temp = readTemp();
+    debugln(temp);
+    return temp;
   }
 }
 

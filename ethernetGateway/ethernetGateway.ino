@@ -83,8 +83,14 @@ void loop()
   }
   if (Time >= MAX_MILLIS_VALUE) {
     clearLCD();
+    setBacklight(true);
     printLine(0, RESET_MESSAGE);
-    while (true);
+    while (true){
+      setBacklight(false);
+      delay(1000);
+      setBacklight(true);
+      delay(1000);
+    }
   }
 }
 void receive(const MyMessage &message) {

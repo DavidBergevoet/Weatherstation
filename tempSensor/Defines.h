@@ -5,8 +5,8 @@
 #define DEBUG_MODE
 // Enable and select radio type attached
 #define MY_RADIO_NRF24
-#define MY_NODE_ID 1
-#define MY_RF24_PA_LEVEL RF24_PA_HIGH
+#define MY_NODE_ID 2
+#define MY_RF24_PA_LEVEL RF24_PA_MAX
 #define MY_RF24_CHANNEL 4
 
 #define MY_MESSAGE_STANDARD_VALUES 1,1
@@ -19,6 +19,6 @@
 #define DELIMITER "|"
 enum MESSAGE_TYPES {BROADCAST_CHAR = 'R',SEND_TEMP_CHAR = 'T',CONNECT_CHAR = 'A'};
 
-#define ID "Binnen"
+#define ID "Buiten"
 
 #endif

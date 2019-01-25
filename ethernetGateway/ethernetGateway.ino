@@ -1,4 +1,6 @@
 //The includes/libraries
+#define DEBUG_MODE
+//#define MY_DEBUG
 #include "Defines.h"
 #include <MySensors.h>
 #include "ClientPrint.h"
@@ -141,4 +143,3 @@ void receive(const MyMessage &message) {
       }
   }
 }
-

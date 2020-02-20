@@ -6,7 +6,7 @@
 #include <LiquidCrystal_I2C.h>
 #include <Ethernet.h>
 #include "Defines.h"
-#include <Debug.h>
+#include "Debug.h"
 
 void setupLCD(const uint8_t width,const uint8_t height);
 void printLine(const uint8_t line, const String& content);

@@ -63,4 +63,3 @@ void setBacklight(bool state){
     LCDCurrentBacklightState=LOW;
   }
 }
-

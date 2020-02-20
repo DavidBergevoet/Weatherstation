@@ -1,11 +1,12 @@
 //The includes/libraries
-#define DEBUG_MODE
-//#define MY_DEBUG
 #include "Defines.h"
+#include "Debug.h"
 #include <MySensors.h>
 #include "ClientPrint.h"
 #include "ParseHTTP.h"
 #include "My_LCD.h"
+
+void(* resetFunc) (void) = 0;
 
 //Global classes
 EthernetClient client;
@@ -88,10 +89,7 @@ void loop()
     setBacklight(true);
     printLine(0, RESET_MESSAGE);
     while (true){
-      setBacklight(false);
-      delay(1000);
-      setBacklight(true);
-      delay(1000);
+      resetFunc();
     }
   }
 }

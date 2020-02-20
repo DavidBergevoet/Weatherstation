@@ -5,7 +5,7 @@
 #include <SPI.h>
 #include <Ethernet.h>
 #include "Defines.h"
-#include <Debug.h>
+#include "Debug.h"
 
 //PARSEMETHODS  ------------------------------------------------------------
 String getBody(EthernetClient* client);

@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 #include "Defines.h"
-#include <Debug.h>
+#include "Debug.h"
 
 void setupSensor(uint8_t aTempPin);
 

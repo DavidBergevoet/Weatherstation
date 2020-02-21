@@ -1,7 +1,7 @@
 #include "Defines.h"
 #include <MySensors.h>
 #include "WeatherStation.h"
-#include <Debug.h>
+#include "Debug.h"
 
 MyMessage connect_msg(MY_MESSAGE_STANDARD_VALUES);
 MyMessage msg(MY_MESSAGE_STANDARD_VALUES);
@@ -22,7 +22,7 @@ void setup() {
 void loop()
 {
   readTempWithDelay();
-  if(millis()%86400000==0){
+  if(millis()%3600001==0){
     send(connect_msg);
   }
 }
@@ -43,6 +43,3 @@ void receive(const MyMessage &message) {
     delay(SEND_MESSAGE_DELAY);
   }
 }
-
-
-

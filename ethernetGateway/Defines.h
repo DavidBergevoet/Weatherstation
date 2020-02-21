@@ -7,7 +7,7 @@
 //#define DEBUG_MODE
 
 // Enable and select radio type attached
-#define MY_RADIO_NRF24
+#define MY_RADIO_RF24
 
 // Set LOW transmit power level as default, if you have an amplified NRF-module and
 // power your radio separately with a good regulator you can turn up PA level.
@@ -67,8 +67,8 @@ enum MESSAGE_TYPES {TEMP_MESSAGE = 'T', CONNECT_MESSAGE = 'A',BROADCAST_MESSAGE 
 
 //CLIENTPRINT Defines
 #define MAC_ADDRESS 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED
-#define USERNAME "..."
-#define PASSWORD "..."
+#define USERNAME "Bergevoet"
+#define PASSWORD "Benji#123"
 #define SERVER "dbergevoet.nl"
 #define PORT 80
 #define WEATHERSTATION_TARGET "/api/weerstation"

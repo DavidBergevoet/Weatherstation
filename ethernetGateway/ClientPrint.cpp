@@ -1,7 +1,8 @@
 #include "ClientPrint.h"
 
 void printHeader(EthernetClient* clnt, const uint8_t cLength) {
-  clnt->print(F("POST http://")); clnt->print(F(SERVER)); clnt->print(F(WEATHERSTATION_TARGET)); clnt->println(F(" HTTP/1.0"));
+  clnt->print(F("POST "));clnt->print(F(WEATHERSTATION_TARGET)); clnt->println(F(" HTTP/1.1"));
+  clnt->print(F("Host: "));clnt->println(F(SERVER));
   clnt->println(F(CONTENT_TYPE));
   clnt->print(F("Content-length: "));
   clnt->println(cLength);
@@ -12,12 +13,11 @@ String printUrlenCoded(EthernetClient* clnt, const String& content) {
   if (clnt->connect(SERVER, PORT)) {
     unsigned short cLength = content.length();
     printHeader(clnt, cLength);
-    clnt->println(content);
-    debugln();
+    clnt->print(content);
     delay(RECEIVE_DELAY);
     String temp;
     uint8_t counter=0;
-    while (clnt->available()) {
+    while (clnt->available()&& counter <12) {
       counter++;
       char c = clnt->read();
       debug(c);
@@ -64,4 +64,3 @@ String getServerTime(EthernetClient* clnt, const String& loginInfo) {
   }
   return GET_SERVER_TIME_ERROR;
 }
-

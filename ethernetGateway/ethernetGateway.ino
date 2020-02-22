@@ -1,5 +1,6 @@
 //The includes/libraries
 #include "Defines.h"
+#include "LoginInfo.h"
 #include "Debug.h"
 #include <MySensors.h>
 #include "ClientPrint.h"

@@ -67,8 +67,7 @@ enum MESSAGE_TYPES {TEMP_MESSAGE = 'T', CONNECT_MESSAGE = 'A',BROADCAST_MESSAGE 
 
 //CLIENTPRINT Defines
 #define MAC_ADDRESS 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED
-#define USERNAME "Bergevoet"
-#define PASSWORD "Benji#123"
+
 #define SERVER "dbergevoet.nl"
 #define PORT 80
 #define WEATHERSTATION_TARGET "/api/weerstation"

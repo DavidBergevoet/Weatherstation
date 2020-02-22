@@ -31,5 +31,4 @@
 *.out
 *.app
 
-# Other
-*/LoginInfo.h
+LoginInfo.h

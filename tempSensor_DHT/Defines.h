@@ -25,4 +25,8 @@ enum MESSAGE_TYPES {BROADCAST_CHAR = 'R',SEND_TEMP_CHAR = 'T',CONNECT_CHAR = 'A'
 
 #define CORRECTION -2
 
+#define DHT_PIN 2
+
+#define DHT_TYPE DHT11
+
 #endif

@@ -7,7 +7,7 @@ MyMessage connect_msg(MY_MESSAGE_STANDARD_VALUES);
 MyMessage msg(MY_MESSAGE_STANDARD_VALUES);
 
 void setup() {
-  setupSensor(TEMP_PIN);
+  setupSensor(TEMP_PIN, DHT_PIN);
   readTemp();
   delay(INIT_DELAY);//This delay is for setup for MySensors
 

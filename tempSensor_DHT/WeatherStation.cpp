@@ -5,24 +5,25 @@ unsigned long  _tempTimer = 0;
 uint8_t tempPin = 0;
 
 float temp = 0;
+
+DHT* _dht;
 unsigned long long nrOfReadings = 0;
 
-void setupSensor(uint8_t aTempPin) {
+void setupSensor(uint8_t aTempPin,uint8_t dhtPin) {
   tempPin = aTempPin;
+  _dht = new DHT(dhtPin,DHT_TYPE);
+  _dht->begin();
+  
 }
 
 float readTemp() {
-  uint16_t rawTempRead = analogRead(tempPin);
-  float Temp;
-  float Rparallel = 10000;
-  float coefficientA = 0.001129148;
-  float coefficientB = 0.000234125;
-  float coefficientC = 0.0000000876741;
-
-  Temp = log(((1024 * Rparallel / rawTempRead) - Rparallel));
-  Temp = 1 / (coefficientA + (coefficientB * Temp) + (coefficientC * Temp * Temp * Temp));
-
-  float TempCelcius = Temp - 273.15 + CORRECTION;
+  float nTemp = _dht->readTemperature();
+  float hum = _dht->readHumidity();
+  if(isnan(nTemp) || isnan(hum))
+  {
+    return 0;
+  }
+  float TempCelcius = _dht->computeHeatIndex(nTemp,hum);
   if(nrOfReadings < 10000)
   {
     temp += TempCelcius;
@@ -39,6 +40,11 @@ float getAvgTemp() {
 void resetAvg() {
   temp = 0;
   nrOfReadings = 0;
+}
+
+float getHumidity()
+{
+  return _dht->readHumidity();
 }
 
 float readTempWithDelay() {

@@ -23,7 +23,7 @@ float readTemp() {
   {
     return 0;
   }
-  float TempCelcius = _dht->computeHeatIndex(nTemp,hum);
+  float TempCelcius = _dht->computeHeatIndex(nTemp,hum,false);
   if(nrOfReadings < 10000)
   {
     temp += TempCelcius;

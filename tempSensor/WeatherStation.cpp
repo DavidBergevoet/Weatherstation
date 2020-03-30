@@ -33,7 +33,7 @@ float readTemp() {
 
 float getAvgTemp() {
   float avg = temp / nrOfReadings;
-  return avg;
+  return -1;
 }
 
 void resetAvg() {

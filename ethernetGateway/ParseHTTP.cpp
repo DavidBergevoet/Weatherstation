@@ -33,7 +33,7 @@ bool isValidNumber(const String& str) {
   debugln(F("-"));
   for (uint8_t i = 0; i < tempString.length(); i++)
   {
-    if (!isDigit(tempString.charAt(i))) return false;
+    if (!isDigit(tempString.charAt(i)) && tempString.charAt(i)!= '-') return false;
   }
   return true;
 }

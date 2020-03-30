@@ -35,6 +35,8 @@ void receive(const MyMessage &message) {
   if (char(message.sensor) == BROADCAST_CHAR) {
     msg.setSensor(SEND_TEMP_CHAR);
     String message = String(MY_NODE_ID) + ID DELIMITER + String(getAvgTemp());
+    debug(F("Message:"));
+    debugln(message);
     char messageArr[message.length()];
     message.toCharArray(messageArr, message.length());
     msg.set(messageArr);

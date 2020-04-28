@@ -14,7 +14,7 @@ void setup() {
   connect_msg.setSensor(CONNECT_CHAR);
   unsigned short nodeId = MY_NODE_ID;
   debugln(nodeId);
-  send(connect_msg.set(MY_NODE_ID));
+  send(connect_msg.set(ID));
   debugln(connect_msg.getString());
   debugln(F("-----------------"));
 }
@@ -34,7 +34,7 @@ void receive(const MyMessage &message) {
   debugln(message.getString());
   if (char(message.sensor) == BROADCAST_CHAR) {
     msg.setSensor(SEND_TEMP_CHAR);
-    String message = String(MY_NODE_ID) + ID DELIMITER + String(getAvgTemp());
+    String message = String(getAvgTemp());
     debug(F("Message:"));
     debugln(message);
     char messageArr[message.length()];

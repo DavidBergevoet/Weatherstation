@@ -30,6 +30,8 @@ bool checked = false;
 //Authentication to the server
 const String loginInfo = "username=" USERNAME "&password=" PASSWORD;
 
+String routeTable[NR_OF_NODES];
+
 void setup()
 {
   setupLCD(LCD_WIDTH, LCD_HEIGHT);
@@ -47,7 +49,7 @@ void interrupt() {
     backlightSwitch = true;
   }
 }
-
+ 
 void loop()
 {
   Time = millis();
@@ -98,45 +100,39 @@ void receive(const MyMessage &message) {
   switch (message.sensor) {
     case TEMP_MESSAGE:
       {
-        String id;
-        String temp;
-        String nodeId = String(message.getString()[0]);
-        debug(F("Received from "));
-        debugln(nodeId.toInt());
-        messagesReceived[nodeId.toInt()] = true;
-        messagesSend[nodeId.toInt()] = false;
-        for (uint8_t i = 1; i < String(message.getString()).length(); ++i) {
-          if (String(message.getString()).charAt(i) == DELIMITER) {
-            id = temp;
-            temp = "";
+        if(message.getSender()<NR_OF_NODES){
+          String temp=message.getString();
+          debug(F("Received from "));
+          debugln(message.getSender());
+          messagesReceived[message.getSender()] = true;
+          messagesSend[message.getSender()] = false;
+        
+          if (isValidNumber(temp)) {
+            debug(F("Write temperature to site From id: "));
+            debugln(id);
+            printLine(0, F("N: "));
+            printLCD(message.getSender());
+            printLCD(F(" T: "));
+            printLCD(temp);
+            String returnCode = printUrlenCoded(&client, loginInfo + "&id=" + routeTable[message.getSender()] +  "&temp=" + temp);
+            printLine(1, returnCode);
           } else {
-            temp += String(message.getString()).charAt(i);
+            debug(F("Temp isnt valid: "));
+            debugln(temp);
+            printLine(1, String(temp) + " isn't valid");
           }
-        }
-        if (isValidNumber(temp)) {
-          debug(F("Write temperature to site From id: "));
-          debugln(id);
-          printLine(0, F("N: "));
-          printLCD(nodeId);
-          printLCD(F(" T: "));
-          printLCD(temp);
-          String returnCode = printUrlenCoded(&client, loginInfo + "&id=" + id +  "&temp=" + temp);
-          printLine(1, returnCode);
-        } else {
-          debug(F("Temp isnt valid: "));
-          debugln(temp);
-          printLine(1, String(temp) + " isn't valid");
         }
         break;
       }
     case CONNECT_MESSAGE:
       {
-        if (message.getInt() < NR_OF_NODES) {
-          connectedNodes[message.getInt()] = message.getInt();
+        if (message.getSender() < NR_OF_NODES) {
+          routeTable[message.getSender()] = message.getString();
+          connectedNodes[message.getSender()] = message.getSender();
           debug(F("Connected to "));
-          debugln(message.getInt());
+          debugln(message.getSender());
           printLine(1, F("Connected to "));
-          printLCD(message.getInt());
+          printLCD(message.getSender());
         }
         break;
       }

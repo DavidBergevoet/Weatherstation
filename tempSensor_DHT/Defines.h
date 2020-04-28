@@ -5,7 +5,7 @@
 #define DEBUG_MODE
 // Enable and select radio type attached
 #define MY_RADIO_RF24
-#define MY_NODE_ID 2
+#define MY_NODE_ID 3
 #define MY_RF24_PA_LEVEL RF24_PA_MAX
 #define MY_RF24_CHANNEL 4
 

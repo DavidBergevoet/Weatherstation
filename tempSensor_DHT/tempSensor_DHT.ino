@@ -11,7 +11,7 @@ void setup() {
   readTemp();
   delay(INIT_DELAY);//This delay is for setup for MySensors
 
-  connect_msg.setSensor(CONNECT_CHAR);
+  connect_msg.setSensor(CONNECT_MESSAGE);
   unsigned short nodeId = MY_NODE_ID;
   debugln(nodeId);
   send(connect_msg.set(ID));
@@ -32,11 +32,21 @@ void receive(const MyMessage &message) {
   debugln(char(message.sensor));
   debug(F("Message: "));
   debugln(message.getString());
-  if (char(message.sensor) == BROADCAST_CHAR) {
-    msg.setSensor(SEND_TEMP_CHAR);
+  if (char(message.sensor) == BROADCAST_MESSAGE) {
+    msg.setSensor(TEMP_MESSAGE);
     String message = String(getAvgTemp());
     char messageArr[message.length()];
     message.toCharArray(messageArr, message.length());
+    msg.set(messageArr);
+    debugln(F("Outgoing message:"));
+    debugln(messageArr);
+    send(msg);
+    delay(SEND_MESSAGE_DELAY);
+
+    msg.setSensor(HUM_MESSAGE);
+    message = String(getAvgHum());
+    char humMessageArr[message.length()];
+    message.toCharArray(messageArr,message.length());
     msg.set(messageArr);
     debugln(F("Outgoing message:"));
     debugln(messageArr);

@@ -32,7 +32,7 @@
 #define MY_MESSAGE_STANDARD 1,1
 #define DELIMITER '|'
 
-enum MESSAGE_TYPES {TEMP_MESSAGE = 'T', CONNECT_MESSAGE = 'A',BROADCAST_MESSAGE = 'R'};
+enum MESSAGE_TYPES {TEMP_MESSAGE = 'T', CONNECT_MESSAGE = 'A',BROADCAST_MESSAGE = 'R',HUM_MESSAGE = 'H'};
 
 //Timers defines
 #define REQUEST_DELAY uint32_t(10)
@@ -70,7 +70,9 @@ enum MESSAGE_TYPES {TEMP_MESSAGE = 'T', CONNECT_MESSAGE = 'A',BROADCAST_MESSAGE 
 
 #define SERVER "dbergevoet.nl"
 #define PORT 80
-#define WEATHERSTATION_TARGET "/api/weerstation"
+#define SENSOR_APP_TARGET "/api/sensor_application"
+#define TEMP_TARGET "/api/temperature"
+#define HUM_TARGET "/api/humidity"
 #define TIME_TARGET "/api/tijd"
 #define CONTENT_TYPE "Content-Type: application/x-www-form-urlencoded"
 #define RECEIVE_DELAY 750

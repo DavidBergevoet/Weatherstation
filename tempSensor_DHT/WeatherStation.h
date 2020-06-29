@@ -12,11 +12,15 @@ float readTemp();
 
 float getAvgTemp();
 
+float getAvgHum();
+
 void resetAvg();
 
 float readTempWithDelay();
 
 float getHumidity();
+
+float readHumWithDelay();
 
 
 #endif

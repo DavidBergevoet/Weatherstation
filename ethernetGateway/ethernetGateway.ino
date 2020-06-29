@@ -114,7 +114,7 @@ void receive(const MyMessage &message) {
             printLCD(message.getSender());
             printLCD(F(" T: "));
             printLCD(temp);
-            String returnCode = printUrlenCoded(&client, loginInfo + "&id=" + routeTable[message.getSender()] +  "&temp=" + temp);
+            String returnCode = printUrlenCoded(&client, loginInfo + "&id=" + routeTable[message.getSender()] +  "&temp=" + temp, TEMP_TARGET);
             printLine(1, returnCode);
           } else {
             debug(F("Temp isnt valid: "));
@@ -133,8 +133,35 @@ void receive(const MyMessage &message) {
           debugln(message.getSender());
           printLine(1, F("Connected to "));
           printLCD(message.getSender());
+          String returnCode = printUrlenCoded(&client, loginInfo + "&id=" + routeTable[message.getSender()],SENSOR_APP_TARGET);
+          
         }
         break;
       }
+     case HUM_MESSAGE:
+     {
+      if(message.getSender()<NR_OF_NODES){
+          String hum=message.getString();
+          debug(F("Received from "));
+          debugln(message.getSender());
+          messagesReceived[message.getSender()] = true;
+          messagesSend[message.getSender()] = false;
+        
+          if (isValidNumber(hum)) {
+            debug(F("Write humidity to site From id: "));
+            debugln(id);
+            printLine(0, F("N: "));
+            printLCD(message.getSender());
+            printLCD(F(" H: "));
+            printLCD(hum);
+            String returnCode = printUrlenCoded(&client, loginInfo + "&id=" + routeTable[message.getSender()] +  "&hum=" + hum, TEMP_TARGET);
+            printLine(1, returnCode);
+          } else {
+            debug(F("Hum isnt valid: "));
+            debugln(hum);
+            printLine(1, String(hum) + " isn't valid");
+          }
+      }
+     }
   }
 }

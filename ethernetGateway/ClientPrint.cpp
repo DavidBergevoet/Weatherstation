@@ -1,7 +1,7 @@
 #include "ClientPrint.h"
 
-void printHeader(EthernetClient* clnt, const uint8_t cLength) {
-  clnt->print(F("POST "));clnt->print(F(WEATHERSTATION_TARGET)); clnt->println(F(" HTTP/1.1"));
+void printHeader(EthernetClient* clnt, const uint8_t cLength, const String& target) {
+  clnt->print(F("POST "));clnt->print(target); clnt->println(F(" HTTP/1.1"));
   clnt->print(F("Host: "));clnt->println(F(SERVER));
   clnt->println(F(CONTENT_TYPE));
   clnt->print(F("Content-length: "));
@@ -9,10 +9,10 @@ void printHeader(EthernetClient* clnt, const uint8_t cLength) {
   clnt->println();
 }
 
-String printUrlenCoded(EthernetClient* clnt, const String& content) {
+String printUrlenCoded(EthernetClient* clnt, const String& content,const String& target) {
   if (clnt->connect(SERVER, PORT)) {
     unsigned short cLength = content.length();
-    printHeader(clnt, cLength);
+    printHeader(clnt, cLength,target);
     clnt->print(content);
     delay(RECEIVE_DELAY);
     String temp;

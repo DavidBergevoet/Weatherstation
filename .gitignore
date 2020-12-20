@@ -31,6 +31,8 @@
 *.out
 *.app
 
+*.json
+
 # Python
 __pycache__/*
 *.pyc

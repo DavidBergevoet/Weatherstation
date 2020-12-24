@@ -1,6 +1,7 @@
 import datetime
 from serial_connection import serial_connection
 from http_handler import http_handler
+import time
 
 class node:
 	def __init__(self, node_id, name=''):
@@ -109,3 +110,4 @@ if __name__ == '__main__':
 		if ret_seconds_diff >= RETRY_DELAY:
 			ret_datetime_start = datetime.datetime.now()
 			handler.send_retry()
+		time.sleep(0.1)

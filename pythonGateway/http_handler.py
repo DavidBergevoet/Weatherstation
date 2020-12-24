@@ -30,9 +30,18 @@ class http_handler:
 		print(f"Response: {response.status_code} \n\t{response.content}")
 		return response
 
+	def send_sensor_humidity(self, sensor_name, humidity):
+		content = f"username={self._credentials['username']}&password={self._credentials['password']}&id={sensor_name}&hum={humidity}"
+		api_url = '/api/humidity'
+		complete_url = self._URL + api_url
+		print(f"Sending hum request to: {complete_url} with: {content}")
+		response = requests.post(complete_url, content, headers=self._HEADERS)
+		print(f"Response: {response.status_code}\n\t{response.content}")
+		return response
 
 
 if __name__ == '__main__':
 	handler = http_handler()
 	handler.send_sensor_application("Binnen")
 	handler.send_sensor_temperature("Binnen", 21.5)
+	handler.send_sensor_humidity("Binnen", 60)

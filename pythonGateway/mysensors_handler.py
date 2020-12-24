@@ -45,6 +45,9 @@ class mysensors_handler:
 	def handle_temp(self, node, temp):
 		self._site_handler.send_sensor_temperature(node.get_node()['name'], temp)
 
+	def handle_humidity(self, node, humidity):
+		self._site_handler.send_sensor_humidity(node.get_node()['name'], humidity)
+
 	def handle_command(self):
 		self.added_node = False
 		self.sended_broadcast= False
@@ -61,6 +64,12 @@ class mysensors_handler:
 							print(f"Received temp of {n.get_node()['node_id']} : {cmd['payload']}")
 							n.set_received()
 							self.handle_temp(n, cmd['payload'])
+				elif cmd['child_sensor_id'] == 'H':
+					for n in self._my_nodes:
+						if n.get_node()['node_id'] == cmd['node_id']:
+							print(f"Received hum of {n.get_node()['node_id']} : {cmd['payload']}")
+							n.set_received()
+							self.handle_humidity(n, cmd['payload'])
 
 	def send_broadcast(self):
 		self.sended_broadcast = True
@@ -78,7 +87,7 @@ class mysensors_handler:
 
 
 if __name__ == '__main__':
-	BROADCAST_DELAY = 30 # seconds
+	BROADCAST_DELAY = 600 # seconds
 	RETRY_DELAY = 10 #seconds
 
 	handler = mysensors_handler('/dev/ttyUSB0')

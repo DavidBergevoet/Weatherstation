@@ -78,6 +78,13 @@ class node:
 	def set_received(self):
 		self._received = True
 
+def isfloat(value):
+	try:
+		float(value)
+		return True
+	except ValueError:
+		return False
+
 class mysensors_handler:
 	added_node = False
 	sended_broadcast = False
@@ -111,7 +118,7 @@ class mysensors_handler:
 		self.sended_broadcast= False
 		if self._serial.is_readable():
 			cmd = self._serial.read_command()
-			if cmd is not None and cmd['node_id'] != 0:
+			if cmd is not None and cmd['node_id'] != 0 and isfloat(cmd['payload']):
 				print(cmd)
 				if cmd['child_sensor_id'] == 'A':
 					self.add_node(cmd['node_id'], cmd['payload'])
@@ -150,7 +157,7 @@ if __name__ == '__main__':
 	BROADCAST_DELAY = 600 # seconds
 	RETRY_DELAY = 10 #seconds
 
-	handler = mysensors_handler('/dev/pts/3')
+	handler = mysensors_handler('/dev/ttyUSB0')
 	br_datetime_start = datetime.datetime.now()
 	ret_datetime_start = datetime.datetime.now()
 	while 1:

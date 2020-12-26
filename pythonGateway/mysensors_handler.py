@@ -59,18 +59,18 @@ class node:
 				}
 
 	def add_temp(self, value):
-		return self._temp_buffer.insert(int(value))
+		return self._temp_buffer.insert(float(value))
 
 	def add_hum(self, value):
-		return self._hum_buffer.insert(int(value))
+		return self._hum_buffer.insert(float(value))
 
 	def can_add_temp(self, value):
 		print(f"AVG Temp: {self._temp_buffer.get_average()}")
-		return self._temp_buffer.can_insert(int(value))
+		return self._temp_buffer.can_insert(float(value))
 
 	def can_add_hum(self, value):
 		print(f"AVG Hum: {self._hum_buffer.get_average()}")
-		return self._hum_buffer.can_insert(int(value))
+		return self._hum_buffer.can_insert(float(value))
 
 	def reset_received(self):
 		self._received = False

@@ -118,21 +118,21 @@ class mysensors_handler:
 		self.sended_broadcast= False
 		if self._serial.is_readable():
 			cmd = self._serial.read_command()
-			if cmd is not None and cmd['node_id'] != 0 and isfloat(cmd['payload']):
+			if cmd is not None and cmd['node_id'] != 0 :
 				print(cmd)
 				if cmd['child_sensor_id'] == 'A':
 					self.add_node(cmd['node_id'], cmd['payload'])
 
 				elif cmd['child_sensor_id'] == 'T':
 					for n in self._my_nodes:
-						if n.get_node()['node_id'] == cmd['node_id'] and n.can_add_temp(cmd['payload']):
+						if n.get_node()['node_id'] == cmd['node_id'] and n.can_add_temp(cmd['payload']) and isfloat(cmd['payload']):
 							print(f"Received temp of {n.get_node()['node_id']} : {cmd['payload']}")
 							n.add_temp(cmd['payload'])
 							n.set_received()
 							self.handle_temp(n, cmd['payload'])
 				elif cmd['child_sensor_id'] == 'H':
 					for n in self._my_nodes:
-						if n.get_node()['node_id'] == cmd['node_id'] and n.can_add_hum(cmd['payload']):
+						if n.get_node()['node_id'] == cmd['node_id'] and n.can_add_hum(cmd['payload']) and isfloat(cmd['payload']):
 							print(f"Received hum of {n.get_node()['node_id']} : {cmd['payload']}")
 							n.set_received()
 							n.add_hum(cmd['payload'])

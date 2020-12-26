@@ -2,17 +2,74 @@ import datetime
 from serial_connection import serial_connection
 from http_handler import http_handler
 
+class buffer:
+	_BOUNDARY_SIZE = 5
+	def __init__(self, records):
+		self._list = []
+		self._count = 0
+		self._max = records
+
+	def can_insert(self, value):
+		print(f"List: {self._list}")
+		if len(self._list) != 0:
+			return (self.get_average() and (value >= self.get_min_boundary() and value <= self.get_max_boundary()))
+		return True
+
+	def insert(self,value):
+		if self._count >= self._max:
+			self._count = 0
+		if not self.can_insert(value):
+			print(f"Couldn't insert value: {value}")
+			return False
+		if len(self._list) < self._count + 1:
+			self._list.append(0)
+		self._list[self._count] = value
+		self._count += 1
+		print(f"Inserted value: {value}")
+		return True
+
+	def get_average(self):
+		if len(self._list) > 0:
+			return sum(self._list) / len(self._list)
+		return False
+
+	def get_min_boundary(self):
+		if self.get_average():
+			return self.get_average() - self._BOUNDARY_SIZE
+		return False
+
+	def get_max_boundary(self):
+		if self.get_average():
+			return self.get_average() + self._BOUNDARY_SIZE
+		return False
+
 class node:
 	def __init__(self, node_id, name=''):
 		self._node_id = int(node_id)
 		self._node_name = name
 		self._received = True
+		self._temp_buffer = buffer(5)
+		self._hum_buffer = buffer(5)
 
 	def get_node(self):
 		return {"node_id":self._node_id,
 				"name":self._node_name,
 				"received": self._received
 				}
+
+	def add_temp(self, value):
+		return self._temp_buffer.insert(int(value))
+
+	def add_hum(self, value):
+		return self._hum_buffer.insert(int(value))
+
+	def can_add_temp(self, value):
+		print(f"AVG Temp: {self._temp_buffer.get_average()}")
+		return self._temp_buffer.can_insert(int(value))
+
+	def can_add_hum(self, value):
+		print(f"AVG Hum: {self._hum_buffer.get_average()}")
+		return self._hum_buffer.can_insert(int(value))
 
 	def reset_received(self):
 		self._received = False
@@ -60,15 +117,17 @@ class mysensors_handler:
 
 				elif cmd['child_sensor_id'] == 'T':
 					for n in self._my_nodes:
-						if n.get_node()['node_id'] == cmd['node_id']:
+						if n.get_node()['node_id'] == cmd['node_id'] and n.can_add_temp(cmd['payload']):
 							print(f"Received temp of {n.get_node()['node_id']} : {cmd['payload']}")
+							n.add_temp(cmd['payload'])
 							n.set_received()
 							self.handle_temp(n, cmd['payload'])
 				elif cmd['child_sensor_id'] == 'H':
 					for n in self._my_nodes:
-						if n.get_node()['node_id'] == cmd['node_id']:
+						if n.get_node()['node_id'] == cmd['node_id'] and n.can_add_hum(cmd['payload']):
 							print(f"Received hum of {n.get_node()['node_id']} : {cmd['payload']}")
 							n.set_received()
+							n.add_hum(cmd['payload'])
 							self.handle_humidity(n, cmd['payload'])
 
 	def send_broadcast(self):
@@ -90,7 +149,7 @@ if __name__ == '__main__':
 	BROADCAST_DELAY = 600 # seconds
 	RETRY_DELAY = 10 #seconds
 
-	handler = mysensors_handler('/dev/ttyUSB0')
+	handler = mysensors_handler('/dev/pts/3')
 	br_datetime_start = datetime.datetime.now()
 	ret_datetime_start = datetime.datetime.now()
 	while 1:

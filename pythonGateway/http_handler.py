@@ -3,7 +3,7 @@ import json
 
 class http_handler:
 	_CREDENTIAL_FILE = 'credentials.json'
-	_URL = 'http://dbergevoet.nl'
+	_URL = 'https://dbergevoet.nl'
 	_HEADERS = {'Content-type' : 'application/x-www-form-urlencoded'}
 
 	def __init__(self):

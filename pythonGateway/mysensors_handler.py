@@ -82,7 +82,7 @@ def isfloat(value):
 	try:
 		float(value)
 		return True
-	except ValueError:
+	except:
 		return False
 
 class mysensors_handler:
@@ -125,14 +125,14 @@ class mysensors_handler:
 
 				elif cmd['child_sensor_id'] == 'T':
 					for n in self._my_nodes:
-						if n.get_node()['node_id'] == cmd['node_id'] and n.can_add_temp(cmd['payload']) and isfloat(cmd['payload']):
+						if n.get_node()['node_id'] == cmd['node_id'] and isfloat(cmd['payload']) and n.can_add_temp(cmd['payload']):
 							print(f"Received temp of {n.get_node()['node_id']} : {cmd['payload']}")
 							n.add_temp(cmd['payload'])
 							n.set_received()
 							self.handle_temp(n, cmd['payload'])
 				elif cmd['child_sensor_id'] == 'H':
 					for n in self._my_nodes:
-						if n.get_node()['node_id'] == cmd['node_id'] and n.can_add_hum(cmd['payload']) and isfloat(cmd['payload']):
+						if n.get_node()['node_id'] == cmd['node_id'] and isfloat(cmd['payload']) and n.can_add_hum(cmd['payload']) :
 							print(f"Received hum of {n.get_node()['node_id']} : {cmd['payload']}")
 							n.set_received()
 							n.add_hum(cmd['payload'])

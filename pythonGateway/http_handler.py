@@ -17,8 +17,9 @@ class http_handler:
 		api_url = '/api/sensor_application'
 		complete_url = self._URL + api_url
 		print(f"Sending request to: {complete_url} with: {content}")
-		response = requests.post(complete_url, content, headers=self._HEADERS)
-		print(f"Response: {response.status_code} \n\t{response.content}")
+		response = self.post_request(complete_url, content)
+		if response != False:
+			print(f"Response: {response.status_code} \n\t{response.content}")
 		return response
 
 	def send_sensor_temperature(self, sensor_name, temperature):
@@ -26,8 +27,9 @@ class http_handler:
 		api_url = '/api/temperature'
 		complete_url = self._URL + api_url
 		print(f"Sending request to: {complete_url} with: {content}")
-		response = requests.post(complete_url, content, headers=self._HEADERS)
-		print(f"Response: {response.status_code} \n\t{response.content}")
+		response = self.post_request(complete_url, content)
+		if response != False:
+			print(f"Response: {response.status_code} \n\t{response.content}")
 		return response
 
 	def send_sensor_humidity(self, sensor_name, humidity):
@@ -35,13 +37,20 @@ class http_handler:
 		api_url = '/api/humidity'
 		complete_url = self._URL + api_url
 		print(f"Sending hum request to: {complete_url} with: {content}")
-		response = requests.post(complete_url, content, headers=self._HEADERS)
-		print(f"Response: {response.status_code}\n\t{response.content}")
+		response = self.post_request(complete_url, content)
+		if response != False:
+			print(f"Response: {response.status_code}\n\t{response.content}")
 		return response
+
+	def post_request(self, url, content):
+		try:
+			return requests.post(url, content, headers=self._HEADERS)
+		except:
+			return False
 
 
 if __name__ == '__main__':
 	handler = http_handler()
-	handler.send_sensor_application("Binnen")
-	handler.send_sensor_temperature("Binnen", 21.5)
-	handler.send_sensor_humidity("Binnen", 60)
+	handler.send_sensor_application("Test")
+	handler.send_sensor_temperature("Test", 21.5)
+	handler.send_sensor_humidity("Test", 60)
